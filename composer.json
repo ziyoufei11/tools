@@ -1,0 +1,32 @@
+{
+  "name": "lss/esay-tools",
+  "type": "library",
+  "description": "php Common function package",
+  "keywords": [
+    "easy tools",
+    "lss"
+  ],
+  "authors": [
+    {
+      "name": "lss",
+      "email": "form_less@foxmail.com",
+      "role": "Maintainer"
+    }
+  ],
+  "require": {
+    "php": ">=7.3"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Lss\\EasyTools\\": "src/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "bin": [
+  ]
+}
