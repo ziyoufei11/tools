@@ -10,7 +10,7 @@ namespace Lss\EasyTools\Tools\MsgRobot;
 class DingDingRobot
 {
     private static $robotArray = [
-        'SEC849e5d09a38a9acab9f5bf863bcd13be9b75e91c5e5011d8c02ea6e57a0e43fc' => 'https://oapi.dingtalk.com/robot/send?access_token=bd0c37f76092835abebf82bc8c2ce3f032dd03b53e8c4949777022ec4797fc1e',
+        'secreate1' => 'weebhook1',
     ];
 
     /**
