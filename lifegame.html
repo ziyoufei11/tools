@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js生命游戏简版mod</title>
+</head>
+<body style="display: flex;justify-content: center">
+<button onclick="reset()" style="width: 100px;height: 20px">重设</button>
+<button onclick="nextEvolution()" style="width: 100px;height: 20px">进化下一步</button>
+<button onclick="autoEvolution()" style="width: 100px;height: 20px">开启自动进化</button>
+<button onclick="endEvolution()" style="width: 100px;height: 20px">关闭自动进化</button>
+<canvas id="lifegame" width="600" height="600"
+        style="border:1px solid #000000;box-shadow: -2px -2px 2px #F3F2F2, 5px 5px 5px #6F6767;">
+</canvas>
+<script>
+    var list = [];
+    var indexList = [];
+    var c = document.getElementById("lifegame");
+    var ctx = c.getContext("2d");
+    var timeout;
+    for(var i=0;i<100;i++){
+        ctx.strokeStyle="#D6D1D1";
+        ctx.moveTo(i*6,0);//垂直方向画15根线，相距30px;
+        ctx.lineTo(i*6,600);
+        ctx.stroke();
+        ctx.moveTo(0,i*6);//水平方向画15根线，相距30px;棋盘为14*14；
+        ctx.lineTo(600,i*6);
+        ctx.stroke();
+    }
+    reset()
+
+    //重新设置棋盘
+    function reset() {
+        for (let i = 0; i < 100; i++) {
+            for (let j = 0;
+                 j < 100;
+                 j++) {
+                let tempOne = Math.round(Math.random())
+                let tempTwo = Math.round(Math.random())
+                let tempThree = Math.round(Math.random())
+                if (tempOne && tempTwo && tempThree) {
+                    list[i + '-' + j] = 1;
+                } else {
+                    list[i + '-' + j] = 0;
+                }
+            }
+        }
+        for (let temp in list) {
+            if (list[temp] == 1) {
+                ctx.fillStyle = "#000000";
+            } else {
+                ctx.fillStyle = "#FFFFFF";
+            }
+            let rc = temp.split('-')
+            let row = rc[0] * 6
+            let cloumn = rc[1] * 6
+            ctx.fillRect(row, cloumn, 5, 5)
+        }
+    }
+
+    //获取元素附近活着的元素
+    function getIndexNearBy(index) {
+        if (!indexList.includes(index)) {
+            let temp = [];
+            let rc = index.split('-')
+            let row = parseInt(rc[0])
+            let column = parseInt(rc[1])
+            for (let i = -1; i < 2; i++) {
+                for (let j = -1; j < 2; j++) {
+                    let tempIndex = parseInt(row + i) + '-' + parseInt(column + j)
+                    if(tempIndex!=index){
+                        temp.push(tempIndex)
+                    }
+                }
+            }
+            indexList[index] = temp
+        }
+
+        let num = 0;
+        for (let near in indexList[index]) {
+            if (list[indexList[index][near]] == 1) {
+                num++
+            }
+        }
+        return num
+    }
+
+    //下一步
+    function nextEvolution() {
+        let newList = []
+        for (let index in list) {
+            let rc = index.split('-')
+            let row = rc[0] * 6
+            let cloumn = rc[1] * 6
+            let num = getIndexNearBy(index)
+            if (num > 3) {
+                //大于三个,死亡
+                newList[index] = 0;
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillRect(row, cloumn, 5, 5)
+            } else if (num == 3) {
+                //等于三个,生成新的
+                newList[index] = 1
+                ctx.fillStyle = "#000000";
+                ctx.fillRect(row, cloumn, 5, 5)
+            } else if (num == 2) {
+                //等于两个,不变
+                newList[index] = list[index]
+            } else {
+                //低于两个,死亡
+                newList[index] = 0
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillRect(row, cloumn, 5, 5)
+            }
+        }
+        list = newList
+    }
+
+    //开启自动进化
+    function autoEvolution(){
+        timeout=setInterval(function () {
+            nextEvolution()
+        },100)
+    }
+
+    //关闭自动进化
+    function endEvolution(){
+        clearInterval(timeout)
+    }
+</script>
+</body>
+</html>
