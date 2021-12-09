@@ -730,8 +730,8 @@
   > > OR 或运算,两个bit位有一个为1时就为1  
   > > NOT 否运算,对**一个**bit进行01互换  
   > > XOR 异或运算,两个bit为不同时为1
-  > - start 查询起始位符,int
-  > - end 查询结束位符,int
+  > - key1 运算的key1
+  > - otherKeys 需要运算的otherkey
   >
   > 返回值:int 新值的字节长度  
   > 将一个或多个key进行bit运算(按照参数传入的顺序挨个进行),储存至新的retkey中
