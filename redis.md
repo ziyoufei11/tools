@@ -979,7 +979,7 @@
   > 返回值:string|mixed|false  
   > 将列表1的队尾数据推送至列表2队首
 
-  > rpoplpush($srcKey, $dstKey, $timeout)
+  > brpoplpush($srcKey, $dstKey, $timeout)
   > - srcKey 取出列表,string
   > - dstKey 推入列表,string
   > - timeout 超时时间,string
